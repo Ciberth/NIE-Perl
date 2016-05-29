@@ -6,20 +6,20 @@ First part!
 ## Interesting functions
 
 1. scalaire functies: 
-* chomp
-* chr
-* hex
-* index
-* lc
-* length
-* oct
-* ord
-* reverse
-* rindex
-* sprintf
-* substr
-* uc
-* split
+  * chomp
+  * chr
+  * hex
+  * index
+  * lc
+  * length
+  * oct
+  * ord
+  * reverse
+  * rindex
+  * sprintf
+  * substr
+  * uc
+  * split
 2. numerieke functies:
 * rand
 * srand

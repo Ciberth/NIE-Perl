@@ -1,3 +1,4 @@
-# My Awesome Book
+# NIE: Perl
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+Part of the NIE (Nothing-Is-Easy) series. 
+Focused on the programming language Perl.

@@ -1,6 +1,6 @@
 # Chapter 1: Perl-Syntax
 
-First part!
+This is the first part of the guide. In this section we will focus on some Perl-syntax, some interesting functions and the most common datastructures used in perl. 
 
 
 ## Interesting functions

@@ -7,11 +7,11 @@ De eerste kolom is een cijfer (int), tweede kolom is een kleur (string), derde k
 
 In de uiteindelijke structuur moeten volgende oproepen (mits correctie van de syntax) werken en de juiste uitvoer geven:
 
-data[0]{id} = 1
-data[5]{id} = 5
-data[5]{kleur} = Blauw
-data[5]{windrichting}[0] = noord
-data[5]{windrichting} = tabel van noord, west, zuid
+- data[0]{id} = 1
+- data[5]{id} = 5
+- data[5]{kleur} = Blauw
+- data[5]{windrichting}[0] = noord
+- data[5]{windrichting} = tabel van noord, west, zuid
 
 
 Vervolgens schrijf je een functie die alle data gestructureerd (zelf te kiezen) wegschrijft naar standaarduitvoer.

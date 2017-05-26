@@ -24,16 +24,80 @@ Als laatste maak je nu terug de csv structuur van de datastructuur data.
 
 ```csv
 id;kleur;getal;windrichting
-1;Rood;5;oost
-2;Blauw;1;west
-3;Geel;2;noord
-4;Groen;3;west, oost
-5;Blauw;9;noord, west, zuid
-6;Paars;0;zuid
-7;Zwart;5;oost, zuid
-8;Wit;8;noord, oost
-9;Oranje;7;noord
-10;Blauw;9;zuid
+1;Rood;5;,oost,,
+2;Blauw;1;,,,west
+3;Geel;2;noord,,,
+4;Groen;3;,oost,,west
+5;Blauw;9;noord,oost,zuid,
+6;Paars;0;,,zuid,
+7;Zwart;5;,oost,zuid,
+8;Wit;8;noord,oost,,
+9;Oranje;7;noord,,,
+10;Blauw;9;,,zuid,
+
+
+```
+
+### Versie Thomas
+
+```perl
+
+print "---Begin of script---\n";
+
+
+print "*Reading in csv-file*\n";
+
+@AoH; # Array of Hashes
+
+while($line = <>){
+	next if $. < 2; # skip the first line = the headerline of the csv
+	
+	($id, $kleur, $getal, $fullstringwindrichting) = split /;/, $line;
+	
+	#print $id, "\n";
+
+	print "**Filling in datastructure\n**";
+
+	# Data is an array of hashes (id, kleur, getal, windrichting) and it's last hash is a hash of an array
+
+	$hash = {}; # small hash
+
+	# $h->{key} = value;
+
+	$h->{"id"} = $id;
+	$h->{"kleur"} = $kleur;
+	$h->{"getal"} = $getal;
+
+	#$h->{"windrichting"} = $windrichting; # but windrichting is here still a string so not good
+
+	# so this should be an hash of an array
+
+	($noord, $oost, $zuid, $west) = split /,/, $fullstringwindrichting;
+
+	$arr[0]=$noord;
+	$arr[1]=$oost;
+	$arr[2]=$zuid;
+	$arr[3]=$west;
+	
+
+	$h->{"windrichting"} = [@arr];
+
+	push @AoH, $h;
+
+}
+
+#print $AoH[0]{"kleur"};
+print "\n";
+print $AoH[2]{"id"}, "\n"; 						# geeft 10 zou 3 moeten zijn?
+print $AoH[5]{"id"}, "\n"; 						# geeft 10 zou 6 moeten zijn?
+print $AoH[5]{"kleur"}, "\n"; 					# geeft blauw zou 6 moeten zijn?
+print $AoH[5]{"getal"}, "\n";					# geeft 9 zou 0 moeten zijn?
+print $AoH[5]{"windrichting"}[0], "\n";			# geeft iets leeg?
+
+print $AoH[5]{"windrichting"}, "\n"; # geeft array ok
+
+
+print "\n---End of script---";
 
 ```
 

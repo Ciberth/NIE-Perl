@@ -41,7 +41,6 @@ id;kleur;getal;windrichting
 ### Versie Thomas
 
 ```perl
-
 print "---Begin of script---\n";
 
 
@@ -54,13 +53,12 @@ while($line = <>){
 	
 	($id, $kleur, $getal, $fullstringwindrichting) = split /;/, $line;
 	
-	#print $id, "\n";
 
-	print "**Filling in datastructure\n**";
+	print "**Filling in datastructure**\n";
 
 	# Data is an array of hashes (id, kleur, getal, windrichting) and it's last hash is a hash of an array
 
-	$hash = {}; # small hash
+	$h = {}; # small hash
 
 	# $h->{key} = value;
 
@@ -80,21 +78,40 @@ while($line = <>){
 	$arr[3]=$west;
 	
 
-	$h->{"windrichting"} = [@arr];
+	$h->{"windrichting"} = [\@arr];
 
 	push @AoH, $h;
 
 }
 
-#print $AoH[0]{"kleur"};
-print "\n";
-print $AoH[2]{"id"}, "\n"; 						# geeft 10 zou 3 moeten zijn?
-print $AoH[5]{"id"}, "\n"; 						# geeft 10 zou 6 moeten zijn?
-print $AoH[5]{"kleur"}, "\n"; 					# geeft blauw zou 6 moeten zijn?
-print $AoH[5]{"getal"}, "\n";					# geeft 9 zou 0 moeten zijn?
-print $AoH[5]{"windrichting"}[0], "\n";			# geeft iets leeg?
+print "*Temp testing*\n";
+
+print $AoH[2]{"id"}, "\n"; 				
+print $AoH[5]{"id"}, "\n"; 				
+print $AoH[5]{"kleur"}, "\n"; 			
+print $AoH[5]{"getal"}, "\n";			
+
+print $AoH[2]{"windrichting"}[0], "\n";	
 
 print $AoH[5]{"windrichting"}, "\n"; # geeft array ok
+
+print "*End Temp testing*\n";
+
+print "\n*** Printing datastructure ***\n";
+
+for (0..9){
+	print $AoH[$_]{"id"}, "\t\t";
+	print $AoH[$_]{"kleur"}, "\t\t";
+	print $AoH[$_]{"getal"}, "\t\t";
+	print $AoH[$_]{"windrichting"}[0], ",",
+			$AoH[$_]{"windrichting"}[1], ",",
+			$AoH[$_]{"windrichting"}[2], ",",
+			$AoH[$_]{"windrichting"}[3], "\n";
+}
+
+
+
+print "\n*** End Printing datastructure ***\n";
 
 
 print "\n---End of script---";

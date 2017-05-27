@@ -196,3 +196,65 @@ In dit onderzoek onderzochten we een dieet. De gegevens zijn als volgt:
 Dit was het onderzoek.
 
 ```
+
+
+## 3. Grid inlezen + referentieleggen
+
+In deze oefening is het de bedoeling om een tabel van temperaturen, een hash van prijzen en een grid in te lezen (een twee dimensionale tabel). Wanneer je ``data[0][0]`` oproept dan spreek je dus eigenlijk de eerste cel aan van de grid. Dit moet vervolgens een hash teruggeven want een cel heeft meerdere eigenschappen:
+
+- een getal (lezen van invoerbestand)
+- een boolean waarde (even/oneven) die je dus bepaalt op basis van het getal
+- een referentie naar de array temperatuur, hiervan weet je dat elke cel refereert naar eenzelfde array
+- een referentie naar de hash prijzen, hiervan weet je dat elke cel refereert naar eenzelfde hash
+
+Na het inlezen van deze informatie print je de waarden van je datastructuur uit (hoe je dit doet, mag je zelf kiezen). Verander vervolgens een waarde in de temperatuur array **en** in de prijzen hash en print vervolgens alles opnieuw uit om te bewijzen dat de referentie zijn werk heeft gedaan. 
+
+Kijk nadien of je datastructuur ook bestand is voor grid2 in te lezen.
+
+De volgende opdracht is het aanpassen van data. We hebben zonet te horen gekregen dat onze meetapparatuur een foute meting heeft gedaan. Daarom moet elke waarde in de tabel temperatuur met 1 graad verminderd worden. 30 wordt 29, 27 wordt 26, enzoverder. Vervolgens is het black friday en krijgen we op alle prijzen 10 procent korting. Pas bijgevolg ook alle prijzen aan in de hash prijzen (let op dat je geen afrondingen of iets dergelijks doet). Als laatste moet je ook alle waarden (getallen) van de grid verdubbel.
+
+Print tot slot alles uit de datastructuur.
+
+**Hints**
+
+```perl
+- print_data() # maak een functie om de datastructuur te printen
+- data[0][0] # geeft een hash terug
+- data[0][0]{"getal"} # geeft het getal terug van de eerste cel (hier 1)
+- data[0][0]{"temperatuur"}[] # geeft de temperatuur van de eerste dag terug (hier 30)
+- data[0][0]{"prijzen"}{"cola"} # geeft de prijs van cola terug
+
+```
+
+**Inhoud van invoer.txt**
+```txt
+De inhoud is:
+
+temperatuur
+30
+27
+22
+20
+10
+12
+13
+
+prijzen
+playstation=300
+cola=2
+pc scherm=500
+chips en nootjes-mix=5
+
+grid (3x3)
+1;2;3
+4;5;6
+7;8;9
+
+grid2 (2x4)
+1;2;3;4
+5;6;7;8
+
+
+
+```
+

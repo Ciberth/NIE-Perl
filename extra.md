@@ -104,20 +104,17 @@ while($line = <>){
 
 	($noord, $oost, $zuid, $west) = split /,/, $fullstringwindrichting;
 
-#	$arr[0]=$noord;
-#	$arr[1]=$oost;
-#	$arr[2]=$zuid;
-#	$arr[3]=$west;
+	$arr[0]=$noord;
+	$arr[1]=$oost;
+	$arr[2]=$zuid;
+	$arr[3]=$west;
+
+	$h->{"windrichting"} = [@arr];
+
+	# OF (en miss wel iets makkelijker)
+
+	#$h->{"windrichting"} = [ $noord, $oost, $zuid, $west ];
 	
-#	push @arr, $noord;
-#	push @arr, $oost;
-#	push @arr, $zuid;
-#	push @arr, $west;
-#
-
-	#$h->{"windrichting"} = \@arr;
-
-	$h->{"windrichting"} = [ $noord, $oost, $zuid, $west ];
 	push @AoH, $h;
 
 }

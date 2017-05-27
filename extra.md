@@ -134,7 +134,7 @@ print "*End Temp testing*\n";
 
 print "\n*** Printing datastructure ***\n";
 
-for (0..9){
+for (0..$#AoH){
 	print $AoH[$_]{"id"}, "\t\t";
 	print $AoH[$_]{"kleur"}, "\t\t";
 	print $AoH[$_]{"getal"}, "\t\t";

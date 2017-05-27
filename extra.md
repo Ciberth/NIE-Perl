@@ -38,6 +38,37 @@ id;kleur;getal;windrichting
 
 ```
 
+### Versie Sander
+
+```perl
+@ARGV = "data.csv";
+
+$header = <>;         #eerste lijn niet gebruiken
+while(<>){             #lijn per lijn want csv
+
+    ($id, $kleur, $getal, $windrichting) = split /;/; 
+    ($noord, $oost, $zuid, $west) = split /,/, $windrichting; 
+
+    # Data is een array (index = id) (want id in csv wss uniek) van hashes (hash bevat kleur=value,getal=value,windrichting=array)
+    $data[$id] = {
+        "kleur" => $kleur,
+        "getal" => $getal,
+        "windrichting" => [ $noord, $oost, $zuid, $west ]
+    };
+}
+
+for (my $i = 0; $i < $#data; $i++) {
+    print "$i\t";
+    print $data[$i]->{"kleur"}, "\t";
+    print $data[$i]->{"getal"}, "\t";
+    @ingevuldeWindrichtingen = grep { $_ ne '' } @{ $data[$i]->{"windrichting"} };        #haal lege velden uit array
+    print join " ", @ingevuldeWindrichtingen;
+    print "\n";
+}
+
+```
+
+
 ### Versie Thomas
 
 ```perl
@@ -47,6 +78,7 @@ print "---Begin of script---\n";
 print "*Reading in csv-file*\n";
 
 @AoH; # Array of Hashes
+@arr;
 
 while($line = <>){
 	next if $. < 2; # skip the first line = the headerline of the csv
@@ -72,14 +104,20 @@ while($line = <>){
 
 	($noord, $oost, $zuid, $west) = split /,/, $fullstringwindrichting;
 
-	$arr[0]=$noord;
-	$arr[1]=$oost;
-	$arr[2]=$zuid;
-	$arr[3]=$west;
+#	$arr[0]=$noord;
+#	$arr[1]=$oost;
+#	$arr[2]=$zuid;
+#	$arr[3]=$west;
 	
+#	push @arr, $noord;
+#	push @arr, $oost;
+#	push @arr, $zuid;
+#	push @arr, $west;
+#
 
-	$h->{"windrichting"} = [\@arr];
+	#$h->{"windrichting"} = \@arr;
 
+	$h->{"windrichting"} = [ $noord, $oost, $zuid, $west ];
 	push @AoH, $h;
 
 }

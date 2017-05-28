@@ -282,25 +282,25 @@ Concreet moet op de eerste lijn drie waarden (a, b en c) gevonden worden zodat a
 
 Wanneer je geen inspiratie hebt om dit op te lossen ga als volgt te werk:
 
-a.) Lees de data uit de file in een geheugenstructuur. (Onderaan staan twee mogelijkheden)
+**a.)** Lees de data uit de file in een geheugenstructuur. (Onderaan staan twee mogelijkheden)
 
-b.) Je mag hier de operatoren statisch gebruiken (dit wil zeggen je hoeft deze niet in te lezen en te verwerken), en er van uitgaan dat ze niet veranderen. Zeer concreet: je zal ergens een stukje code hebben waarin je de conditites gaat testen op een set variabelen. Die testen mag je statisch (hardcoderen).
+**b.)** Je mag hier de operatoren statisch gebruiken (dit wil zeggen je hoeft deze niet in te lezen en te verwerken), en er van uitgaan dat ze niet veranderen. Zeer concreet: je zal ergens een stukje code hebben waarin je de conditites gaat testen op een set variabelen. Die testen mag je statisch (hardcoderen).
 
-c.) Ga er ook maar van uit dat de grootte van de grid niet zal wijzigen (dus altijd 9 getallen die we zoeken).
+**c.)** Ga er ook maar van uit dat de grootte van de grid niet zal wijzigen (dus altijd 9 getallen die we zoeken).
 
-d.) Maak een print procedure/functie die de datastructuur zijn data print.
+**d.)** Maak een print procedure/functie die de datastructuur zijn data print.
 
-e.) Na het inlezen van de data stel je al de waarden van de te zoeken getallen op 1.
+**e.)** Na het inlezen van de data stel je al de waarden van de te zoeken getallen op 1.
 
-f.) Je controleert of alle voorwaarden (dit zijn er 6) voldaan zijn. Zo nee ga naar g.) zoja ga naar i.)
+**f.)** Je controleert of alle voorwaarden (dit zijn er 6) voldaan zijn. Zo nee, ga naar **g.)** zo ja, ga naar **i.)**
 
-g.) Tel bij 1 element 1 op (kies hiervoor bij het element rechts onderaan, het element met de hoogste index). Dit omdat de oplossing van deze puzzel express zo gekozen is om sneller aan een oplossing te komen. Print ook opnieuw de data (dus bij elke iteratie print je, hou ook een tellertje bij die het aantal iteraties telt).
+**g.)** Tel bij 1 element 1 op (kies hiervoor bij het element rechts onderaan, het element met de hoogste index). Dit omdat de oplossing van deze puzzel express zo gekozen is om sneller aan een oplossing te komen. Print ook opnieuw de data (dus bij elke iteratie print je, hou ook een tellertje bij die het aantal iteraties telt).
 
-h.) Ga terug naar f.)
+**h.)** Ga terug naar **f.)**
 
-i.) Alle voorwaarden kloppen, de buzzel is dus opgelost. Print nog eenmaal de data met als melding dit is de oplossing van de puzzel.
+**i.)** Alle voorwaarden kloppen, de puzzel is dus opgelost. Print nog eenmaal de data met als melding dit is de oplossing van de puzzel.
 
-j.) Zorg er nu voor dat de waarden correct in het brainie.txt bestand geplaatst worden. Dit wil zeggen dat de 0n aangepast worden met 
+**j.)** Zorg er nu voor dat de waarden correct in het brainie.txt bestand geplaatst worden. Dit wil zeggen dat de 0n aangepast worden met 
 de correcte waarden maar dat alle andere zaken gelijk blijven. Zorg ervoor dat het oorspronkelijke brainie.txt-bestand ook bewaard wordt (onder een andere naam zoals .bak) en dat de nieuwe brainie.txt de opgeloste versie krijgt.
 
 

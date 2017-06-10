@@ -268,9 +268,220 @@ print_data();
 ```
 
 
-## 4.
+## 5.
 
-### Versie Niels
+### Versie Thomas
 
-```
+```perl
+
+
+$/ = undef;
+
+@OARGV=@ARGV;
+
+
+$svg = <>;
+# Datastructuur: array (aflopen cellen) met daarin een hash ("coordx1 x2 y1 y2", "kleur", "getal") 
+@data;
+
+sub print_data {
+	
+	print "De datastructuur bevat momenteel:\n";
+
+	foreach(@data){
+
+		# OFWEL %{$_}->{"getal"} maar depricated
+
+		print "celnr: ";
+		print ${$_}{"celnr"}, " [", ${$_}{"rijnr"}, ",", ${$_}{"kolnr"}, "]", " ; ";
+		print "getal: ";
+		print ${$_}{"getal"}, " ; ";
+		print "kleur: ";
+		print ${$_}{"kleur"}, " ; ";
+		print "poly: ";
+		print ${$_}{ "poly" }, "\n";
+		
+	}
+
+	print "Einde van de inhoud van de datastructuur!\n";
+}
+
+
+# Aantal rijen en kolommen inlezen nxm
+
+($nrijen, $mkolommen) = ($svg =~ /(\d+) by (\d+) puzzle/ ) ;
+
+# Aantal cellen is gelijk aan n maal m 
+
+$ncellen = $nrijen * $mkolommen;
+
+sub begin_inlezen {
+	print "**Inlezen**\n";
+	print "Rijen:", $nrijen, "\n";
+	print "Kolommen:", $mkolommen, "\n";
+	print "Cellen:", $ncellen, "\n";
+}
+
+
+
+#begin_inlezen();
+
+
+
+
+
+
+# Geen idee of we nu best nen for doen van 0 tot ncellen
+# Of dat we regexen en alles pushen :/
+
+# even in aparte array inlezen
+
+(@xcoord) = ($svg =~ m|<text x="(\d+)" y="\d+" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">\d+</text>|g); 
+(@ycoord) = ($svg =~ m|<text x="\d+" y="(\d+)" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">\d+</text>|g); 
+(@getal) = ($svg =~ m|<text x="\d+" y="\d+" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">(\d+)</text>|g); 
+
+
+sub arrays_printen {
+	print "****Arrays printen:****\n";
+	print "x\n";
+	print join " ", @xcoord;
+	print "\ny\n";
+	print join " ", @ycoord;
+	print "\ngetal\n";
+	print join " ", @getal;
+	print "\n";
+}
+
+
+
+
+#arrays_printen();
+
+
+
+
+
+@kleur;
+
+foreach(@getal){
+	#print $_, " ";
+	if($_ == 1){
+		push @kleur, "blue";
+	} elsif ($_ == 2){
+		push @kleur, "yellow";
+	} elsif ($_ == 3){
+		push @kleur, "red";
+	} elsif ($_ == 4){
+		push @kleur, "green";
+	} else {
+		push @kleur, "other";
+	}
+}
+
+
+# data structuur opvullen
+# data[i]{"getal"} = getal[i]
+# data[i]{"kleur"} = mappen op getal[i]
+# data[i]{"x1"}
+# data[i]{"x2"}
+# data[i]{"y1"}
+# data[i]{"y2"}
+
+for ($i = 0; $i < $ncellen; $i++) {
+	$data[$i]{"getal"} = $getal[$i];
+	$data[$i]{"kleur"} = $kleur[$i];
+	$data[$i]{"celnr"} = $i;
+	#print int $data[$i]{"celnr"}/$mkolommen, " ";
+	#print $data[$i]{"celnr"} % $mkolommen, " ";
+	#print "\n";
+	$data[$i]{"rijnr"} = int $data[$i]{"celnr"}/$mkolommen;
+	$data[$i]{"kolnr"} = int $data[$i]{"celnr"}%$mkolommen;
+
+
+	$x1=16+$data[$i]{"rijnr"}*16;
+	$x2=0+$data[$i]{"rijnr"}*16;
+	$x3=0+$data[$i]{"rijnr"}*16;
+	$x4=16+$data[$i]{"rijnr"}*16;
+
+	$y1=0+$data[$i]{"kolnr"}*16;
+	$y2=0+$data[$i]{"kolnr"}*16;
+	$y3=16+$data[$i]{"kolnr"}*16;
+	$y4=16+$data[$i]{"kolnr"}*16;
+	
+
+	$data[$i]{"poly"} = "$x1,$y1 $x2,$y2 $x3,$y3 $x4,$y4";
+}
+
+
+# Begin van svg tellen is denk ik 16,0 0,0 0,16 16,16
+# bij alle eerstes bijtellen voor van kolom 0 naar 1 te gaan
+# bij de tweedes (na de kommas) voor via rijen te gaan
+# Dus eigenlijk wil ik nog een {"polygon"}= "64,16 48,16 48,32 64,32" formaat is
+# "64,16 48,16 48,32 64,32" = "x1,y1 x2,y2 x3,y3 x4,y4"
+# dit zijn 8 cijfers die we telkens moeten bepalen afh van rij en kol nr van de cel
+# FORMULE voor grid in 1 dimentionale array alles 0 based
+# celnr omzetten naar rijnr en kolomnr:
+# celnr / nkolommen = rijnr
+# celnr % nkolommen = kolomnr 
+
+
+
+#print_data();
+
+
+
+#print $data[19]{"getal"};
+#print $data[19]{"poly"};
+
+$blue; # dit is alles wat in de blue tag moet komen
+$red;
+$yellow;
+$green;
+
+
+# polygons maken
+# elke cel overlopen checken op welk kleur het is en dan polygon toevoegen
+
+
+for ($i = 0; $i < $ncellen; $i++) {
+	
+	if($data[$i]{"kleur"} eq "blue"){
+
+		$blue.= "<polygon points=\"$data[$i]{'poly'}\" />\n";
+
+	}elsif($data[$i]{"kleur"} eq "red"){
+
+		$red.= "<polygon points=\"$data[$i]{'poly'}\" />\n";
+
+	}elsif($data[$i]{"kleur"} eq "yellow"){
+
+		$yellow.= "<polygon points=\"$data[$i]{'poly'}\" />\n";
+
+	}elsif($data[$i]{"kleur"} eq "green"){
+
+		$green.= "<polygon points=\"$data[$i]{'poly'}\" />\n";
+
+	}
+
+
+}
+
+# Terug opnieuw inlezen en polygon tags toevoegen!
+$^I=".bak";
+@ARGV = @OARGV;
+
+#wegschrijven
+$weg = <>;
+
+$weg =~ s/<g fill="blue" stroke="none">/<g fill="blue" stroke="none">\n$blue/;
+$weg =~ s/<g fill="red" stroke="none">/<g fill="red" stroke="none">\n$red/;
+$weg =~ s/<g fill="yellow" stroke="none">/<g fill="yellow" stroke="none">\n$yellow/;
+$weg =~ s/<g fill="green" stroke="none">/<g fill="green" stroke="none">\n$green/;
+
+
+
+print $weg;
+
+
+
 ```

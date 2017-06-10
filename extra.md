@@ -257,7 +257,6 @@ Lees de data in en zorg ervoor dat elk vakje nu voorzien wordt van de juiste ach
     <text x="88" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
   </g>
 </svg>
-
 ```
 
 

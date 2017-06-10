@@ -275,6 +275,8 @@ print_data();
 ```perl
 
 
+
+
 $/ = undef;
 
 @OARGV=@ARGV;
@@ -398,15 +400,15 @@ for ($i = 0; $i < $ncellen; $i++) {
 	$data[$i]{"kolnr"} = int $data[$i]{"celnr"}%$mkolommen;
 
 
-	$x1=16+$data[$i]{"rijnr"}*16;
-	$x2=0+$data[$i]{"rijnr"}*16;
-	$x3=0+$data[$i]{"rijnr"}*16;
-	$x4=16+$data[$i]{"rijnr"}*16;
+	$x1=32+$data[$i]{"kolnr"}*16;
+	$x2=16+$data[$i]{"kolnr"}*16;
+	$x3=16+$data[$i]{"kolnr"}*16;
+	$x4=32+$data[$i]{"kolnr"}*16;
 
-	$y1=0+$data[$i]{"kolnr"}*16;
-	$y2=0+$data[$i]{"kolnr"}*16;
-	$y3=16+$data[$i]{"kolnr"}*16;
-	$y4=16+$data[$i]{"kolnr"}*16;
+	$y1=16+$data[$i]{"rijnr"}*16;
+	$y2=16+$data[$i]{"rijnr"}*16;
+	$y3=32+$data[$i]{"rijnr"}*16;
+	$y4=32+$data[$i]{"rijnr"}*16;
 	
 
 	$data[$i]{"poly"} = "$x1,$y1 $x2,$y2 $x3,$y3 $x4,$y4";
@@ -481,6 +483,9 @@ $weg =~ s/<g fill="green" stroke="none">/<g fill="green" stroke="none">\n$green/
 
 
 print $weg;
+
+
+
 
 
 

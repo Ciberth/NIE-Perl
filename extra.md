@@ -38,121 +38,6 @@ id;kleur;getal;windrichting
 
 ```
 
-### Versie Sander
-
-```perl
-@ARGV = "data.csv";
-
-$header = <>;         #eerste lijn niet gebruiken
-while(<>){             #lijn per lijn want csv
-
-    ($id, $kleur, $getal, $windrichting) = split /;/; 
-    ($noord, $oost, $zuid, $west) = split /,/, $windrichting; 
-
-    # Data is een array (index = id) (want id in csv wss uniek) van hashes (hash bevat kleur=value,getal=value,windrichting=array)
-    $data[$id] = {
-        "kleur" => $kleur,
-        "getal" => $getal,
-        "windrichting" => [ $noord, $oost, $zuid, $west ]
-    };
-}
-
-for (my $i = 0; $i < $#data; $i++) {
-    print "$i\t";
-    print $data[$i]->{"kleur"}, "\t";
-    print $data[$i]->{"getal"}, "\t";
-    @ingevuldeWindrichtingen = grep { $_ ne '' } @{ $data[$i]->{"windrichting"} };        #haal lege velden uit array
-    print join " ", @ingevuldeWindrichtingen;
-    print "\n";
-}
-
-```
-
-
-### Versie Thomas
-
-```perl
-print "---Begin of script---\n";
-
-
-print "*Reading in csv-file*\n";
-
-@AoH; # Array of Hashes
-@arr;
-
-while($line = <>){
-	next if $. < 2; # skip the first line = the headerline of the csv
-	
-	($id, $kleur, $getal, $fullstringwindrichting) = split /;/, $line;
-	
-
-	print "**Filling in datastructure**\n";
-
-	# Data is an array of hashes (id, kleur, getal, windrichting) and it's last hash is a hash of an array
-
-	$h = {}; # small hash
-
-	# $h->{key} = value;
-
-	$h->{"id"} = $id;
-	$h->{"kleur"} = $kleur;
-	$h->{"getal"} = $getal;
-
-	#$h->{"windrichting"} = $windrichting; # but windrichting is here still a string so not good
-
-	# so this should be an hash of an array
-
-	($noord, $oost, $zuid, $west) = split /,/, $fullstringwindrichting;
-
-	$arr[0]=$noord;
-	$arr[1]=$oost;
-	$arr[2]=$zuid;
-	$arr[3]=$west;
-
-	$h->{"windrichting"} = [@arr];
-
-	# OF (en miss wel iets makkelijker)
-
-	#$h->{"windrichting"} = [ $noord, $oost, $zuid, $west ];
-	
-	push @AoH, $h;
-
-}
-
-print "*Temp testing*\n";
-
-print $AoH[2]{"id"}, "\n"; 				
-print $AoH[5]{"id"}, "\n"; 				
-print $AoH[5]{"kleur"}, "\n"; 			
-print $AoH[5]{"getal"}, "\n";			
-
-print $AoH[2]{"windrichting"}[0], "\n";	
-
-print $AoH[5]{"windrichting"}, "\n"; # geeft array ok
-
-print "*End Temp testing*\n";
-
-print "\n*** Printing datastructure ***\n";
-
-for (0..$#AoH){
-	print $AoH[$_]{"id"}, "\t\t";
-	print $AoH[$_]{"kleur"}, "\t\t";
-	print $AoH[$_]{"getal"}, "\t\t";
-	print $AoH[$_]{"windrichting"}[0], ",",
-			$AoH[$_]{"windrichting"}[1], ",",
-			$AoH[$_]{"windrichting"}[2], ",",
-			$AoH[$_]{"windrichting"}[3], "\n";
-}
-
-
-
-print "\n*** End Printing datastructure ***\n";
-
-
-print "\n---End of script---";
-
-```
-
 
 
 ## 2. Iets tussenpietsen in een file
@@ -315,6 +200,64 @@ de correcte waarden maar dat alle andere zaken gelijk blijven. Zorg ervoor dat h
 
 
 
+## 5. Mappen en met svgs spelen
 
+In deze oefening moet je een svg inlezen. De svg bevat een grid met cijfertjes in. De cijfers gaan van 1 tot 4 en stellen elk een kleur voor:
+
+- 1 is blauw
+- 2 is geel
+- 3 is rood
+- 4 is groen
+
+Lees de data in en zorg ervoor dat elk vakje nu voorzien wordt van de juiste achtergrondkleur.
+
+**Inhoud van svga.svg**
+
+![svg](svgs/svga.svg)
+
+````svg
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="192" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="160" fill="white" stroke="none" />
+  <title>5 by 5 puzzle</title>
+  <g fill="blue" stroke="none">
+  </g>
+  <g fill="red" stroke="none">
+  </g>
+  <g fill="yellow" stroke="none">
+  </g>
+  <g fill="green" stroke="none">
+  </g>
+<g fill="black" stroke="none" stroke-width="1">
+    <text x="24" y="26" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
+    <text x="40" y="26" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="56" y="26" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="72" y="26" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">4</text>
+    <text x="88" y="26" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">4</text>
+    <text x="24" y="42" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">1</text>
+    <text x="40" y="42" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
+    <text x="56" y="42" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="72" y="42" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="88" y="42" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">1</text>
+    <text x="24" y="58" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
+    <text x="40" y="58" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">1</text>
+    <text x="56" y="58" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="72" y="58" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="88" y="58" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">4</text>
+    <text x="24" y="74" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
+    <text x="40" y="74" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="56" y="74" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="72" y="74" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">4</text>
+    <text x="88" y="74" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">1</text>
+    <text x="24" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="40" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">3</text>
+    <text x="56" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">4</text>
+    <text x="72" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">4</text>
+    <text x="88" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
+  </g>
+</svg>
+
+```
 
 

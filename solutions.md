@@ -484,9 +484,79 @@ $weg =~ s/<g fill="green" stroke="none">/<g fill="green" stroke="none">\n$green/
 
 print $weg;
 
+```
+
+**Versie van Sander**
+
+```perl
+
+@ARGV = "test.svg";
+@OARGV=@ARGV;
+
+@nrToString = ("", "blue", "yellow", "red", "green");    # trucje voor conversie nummers to string
+
+#inlezen in datastructuur (gemakkelijkste hier line mode)
+while(<>) {
+    if(/(\d+) by (\d+) puzzle/ ) {
+        $rows = $1;
+        $cols = $2;
+        $size = $1 * $2;
+    }
+    elsif(m!<text x="(\d+)" y="(\d+)" .*">(\d+)</text>!) {
+        push @data, {"x" => $1, "y" => $2, "color" => $nrToString[$3]};        #waarom x en y nodig?
+    }
+}
+
+#maken van polygons
+for ($i = 0; $i < $size; $i++) {
+    #bereken cols en rows
+    $row = int $i / $rows;
+    $col = int $i % $cols;
+
+    #polygon shit bereken (van thomas)
+    $x1=32+$col*16;
+    $x2=16+$col*16;
+    $x3=16+$col*16;
+    $x4=32+$col*16;
+
+    $y1=16+$row*16;
+    $y2=16+$row*16;
+    $y3=32+$row*16;
+    $y4=32+$row*16;
+
+    #print "<polygon points=\"$x1,$y1 $x2,$y2 $x3,$y3 $x4,$y4\" />\n";
+
+    #in aparte datastructuur steken (want straks moet we kunnen zoeken op color)
+    #handig: hash met als key de color en  als value een array vd polygons
+    push @{ $dataByColor{ $data[$i]{color} } }, "<polygon points=\"$x1,$y1 $x2,$y2 $x3,$y3 $x4,$y4\" />\n";
+
+}
+
+# for ($i = 0; $i < $size; $i++) {
+#     print "$data[$i]{x}, $data[$i]{y}, $data[$i]{color}, $data[$i]{poly} \n";
+# }
+
+# print join "", @{ $dataByColor{yellow} };
 
 
+$^I=".bak";
+@ARGV = @OARGV;
 
+while(<>) {
+    print $_;
 
+    if(m!<g fill="blue" stroke="none">! ) {
+          print join "", @{ $dataByColor{blue} };
+    }
+    elsif(m!<g fill="red" stroke="none">! ) {
+          print join "", @{ $dataByColor{red} };
+    }
+    elsif(m!<g fill="yellow" stroke="none">! ) {
+          print join "", @{ $dataByColor{yellow} };
+    }
+    elsif(m!<g fill="green" stroke="none">! ) {
+          print join "", @{ $dataByColor{green} };
+    }
+}
 
 ```

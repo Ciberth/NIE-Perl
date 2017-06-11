@@ -215,7 +215,7 @@ Lees de data in en zorg ervoor dat elk vakje nu voorzien wordt van de juiste ach
 
 ![svg](svgs/svga.svg)
 
-````svg
+```svg
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="192" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -257,6 +257,24 @@ Lees de data in en zorg ervoor dat elk vakje nu voorzien wordt van de juiste ach
     <text x="88" y="90" text-anchor="middle" style="font-family:Arial Narrow; font-size: xx-small;">2</text>
   </g>
 </svg>
+
 ```
+
+
+## 6. Iteratie en svg vullen
+
+Gebruik ![svg](svgs/iteratie.svg) en los deze op zodat deze ![svg](svgs/iteratieopl.svg) wordt.
+Als kleine bijkomende extra: zorg ervoor dat de cellen waarmee we beginnen (hier op de diagonaal 4,2 en 4) een achtergrond kleur krijgen (zoals in oef 5). **De puzzel werkt als volgt:** Elk vierkantje (2 op 2 matrix) binnen deze 3 op 3 matrix moet de waarden 1,2,3,4 krijgen (zoals bij een sudoku). Hierin mag echter dezelfde waarde meerdere keren per lijn voorkomen. Zie de oplossing.
+
+Om het op te lossen ga je als volgt te werk:
+
+- Lees alle data in en bepaal voor elke cel de mogelijke waarden. In dit geval zijn de mogelijke waarden 1,2,3 of 4. Dit noemen we de init-fase.
+
+- Nu begint de eerste iteratiefase. Je gaat voor elke cel de mogelijke waarden reduceren en dit door te kijken naar de onmiddelijke buren (links, rechts, onder, boven). Bijvoorbeeld in de tweede cel naast de vier (en ook de cel eronder) moet 4 verwijderd worden uit de mogelijke waarden!
+
+- De tweede iteratiefase gaat naar de cellen diagonaal kijken. Zo zal de derde cel 2 uit zijn mogelijke waarden kunnen halen. 
+
+- Zorg ervoor dat je continu itereert over deze twee iteratiefases. Het liefst doe je iteratiefase 1 tot je geen oplossingen meer hebt, dan doe je twee en vanzodra je nieuwe info hebt keer dan terug naar iteratiefase 1. Wijk hier gerust van af als dit programmatisch makkelijker is.
+
 
 
